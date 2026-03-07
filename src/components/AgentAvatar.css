@@ -1,0 +1,33 @@
+.agent-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+  transition: var(--transition-normal);
+}
+
+.agent-avatar--small {
+  width: 28px;
+  height: 28px;
+  font-size: 12px;
+}
+
+.agent-avatar--medium {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+}
+
+.agent-avatar--large {
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+}
+
+.agent-avatar:hover {
+  transform: scale(1.05);
+}
