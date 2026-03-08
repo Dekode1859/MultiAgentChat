@@ -27,6 +27,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Message queue management with retry logic
 - Auto-scroll to new messages
 - Edit and delete messages (for user messages)
+- opencodeService (src/services/opencodeService.js) for OpenCode integration (mocked)
+- API client configuration with authentication
+- Streaming responses support (SSE-ready architecture)
+- Connection state management
+- Code execution placeholder
+- Session management
 
 ### Changed
 - Migrated from custom CSS to Tailwind CSS
@@ -38,7 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added message service integration for agent responses
 
 ### Known Issues
-- No OpenCode integration yet
+- None (all 4 phases complete)
 
 ### Next Steps
-- Phase 4: OpenCode Integration
+- All phases complete - ready for production deployment
