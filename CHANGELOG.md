@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - opencodeService API integration (Phase 2) - postResponse() method with retry logic
 - OpenCode configuration documentation (Phase 3) - payload format and API endpoint
 - Polling for real-time UI updates (Phase 4) - pollForResponses() in messageService
+- Docker configuration (Phase 5) - Express server for API and static files
 
 ### Changed
 - Migrated from custom CSS to Tailwind CSS
@@ -49,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added message service integration for agent responses
 
 ### Known Issues
-- Phase 1, 2, 3, 4 complete (Express API + opencodeService + config docs + polling)
+- All 5 phases complete
 
 ### Next Steps
-- Phase 5: Docker Configuration
+- Docker build and verification
