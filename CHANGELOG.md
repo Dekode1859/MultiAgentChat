@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker configuration for deployment
 - README.md with project documentation
 - TODO.md with implementation roadmap
+- storageService (src/services/storage.js) for localStorage persistence
+- Conversation management (create, select, delete)
+- Message persistence (save, load, edit, delete)
+- Settings persistence (theme, sidebar, agent filter)
+- Import/export conversations as JSON
+- Clear all data option
 
 ### Changed
 - Migrated from custom CSS to Tailwind CSS
@@ -22,11 +28,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Created Sidebar component with agent list and conversation selector
 - Updated all components to use Tailwind classes
 - ThemeContext updated to support Tailwind dark mode
+- App.jsx now uses storage service for message and conversation management
 
 ### Known Issues
-- Using placeholder/sample messages (not persistent)
 - No real-time messaging (UI only)
 - No OpenCode integration yet
 
 ### Next Steps
-- Phase 2: localStorage Backend
+- Phase 3: Real Messaging System

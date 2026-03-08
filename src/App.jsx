@@ -1,34 +1,76 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Header } from './components/Header'
 import { ChatArea } from './components/ChatArea'
 import { InputArea } from './components/InputArea'
 import { Sidebar } from './components/Sidebar'
-import { initialMessages } from './data/sampleMessages'
+import { storageService } from './services/storage'
 import './App.css'
 
 function App() {
-  const [messages, setMessages] = useState(initialMessages)
+  const [messages, setMessages] = useState([])
   const [activeFilter, setActiveFilter] = useState('all')
-  
-  const handleSendMessage = (text) => {
+  const [activeConversationId, setActiveConversationId] = useState(() => 
+    storageService.getActiveConversationId()
+  )
+  const [conversations, setConversations] = useState(() => 
+    storageService.getConversations()
+  )
+
+  useEffect(() => {
+    const conversation = storageService.getConversation(activeConversationId)
+    if (conversation) {
+      setMessages(conversation.messages)
+    }
+  }, [activeConversationId])
+
+  useEffect(() => {
+    const settings = storageService.getSettings()
+    setActiveFilter(settings.agentFilter)
+  }, [])
+
+  const handleSendMessage = useCallback((text) => {
     const newMessage = {
-      id: messages.length + 1,
+      id: Date.now(),
       agentId: 'user',
       content: text,
       timestamp: new Date().toISOString()
     }
-    setMessages(prev => [...prev, newMessage])
-  }
-  
+    setMessages(prev => {
+      const updated = [...prev, newMessage]
+      storageService.addMessage(activeConversationId, newMessage)
+      return updated
+    })
+  }, [activeConversationId])
+
+  const handleCreateConversation = useCallback(() => {
+    const newConv = storageService.createConversation()
+    setConversations(storageService.getConversations())
+    setActiveConversationId(newConv.id)
+    setMessages([])
+  }, [])
+
+  const handleSelectConversation = useCallback((id) => {
+    setActiveConversationId(id)
+    storageService.setActiveConversationId(id)
+    const conversation = storageService.getConversation(id)
+    if (conversation) {
+      setMessages(conversation.messages)
+    }
+  }, [])
+
   const filteredMessages = activeFilter === 'all' 
     ? messages 
     : messages.filter(m => m.agentId === activeFilter)
-  
+
   return (
     <div className="flex h-screen bg-background">
       <Sidebar 
         activeFilter={activeFilter} 
-        onFilterChange={setActiveFilter} 
+        onFilterChange={setActiveFilter}
+        conversations={conversations}
+        activeConversationId={activeConversationId}
+        onSelectConversation={handleSelectConversation}
+        onCreateConversation={handleCreateConversation}
       />
       <div className="flex-1 flex flex-col">
         <Header 
