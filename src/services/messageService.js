@@ -27,6 +27,10 @@ class MessageService {
     this.isProcessing = false
     this.typingAgents = new Set()
     this.listeners = new Set()
+    this.pollInterval = null
+    this.lastResponseId = {}
+    this.apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    this.pollingEnabled = false
   }
 
   subscribe(callback) {
@@ -169,6 +173,73 @@ class MessageService {
       return true
     }
     return false
+  }
+
+  startPolling(chatId, intervalMs = 2000) {
+    if (this.pollInterval) {
+      this.stopPolling()
+    }
+    
+    this.pollingEnabled = true
+    this.pollInterval = setInterval(() => {
+      this.pollForResponses(chatId)
+    }, intervalMs)
+    
+    this.pollForResponses(chatId)
+  }
+
+  stopPolling() {
+    this.pollingEnabled = false
+    if (this.pollInterval) {
+      clearInterval(this.pollInterval)
+      this.pollInterval = null
+    }
+  }
+
+  async pollForResponses(chatId) {
+    if (!this.pollingEnabled || !chatId) return
+
+    try {
+      const since = this.lastResponseId[chatId] || ''
+      const response = await fetch(
+        `${this.apiBaseUrl}/api/responses/${chatId}?since=${since}`,
+        { signal: AbortSignal.timeout(5000) }
+      )
+
+      if (response.ok) {
+        const data = await response.json()
+        const newResponses = data.responses || []
+
+        if (newResponses.length > 0) {
+          this.lastResponseId[chatId] = newResponses[newResponses.length - 1].id
+
+          for (const resp of newResponses) {
+            if (!resp.done) {
+              this.emit('streamChunk', {
+                chatId: resp.chatId,
+                agentId: resp.agentId,
+                chunk: resp.chunk,
+                done: resp.done
+              })
+            } else {
+              this.emit('agentResponse', {
+                id: resp.id,
+                agentId: resp.agentId,
+                chunk: resp.chunk,
+                done: resp.done,
+                timestamp: resp.timestamp
+              })
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.warn('Polling failed:', error.message)
+    }
+  }
+
+  isPolling() {
+    return this.pollingEnabled
   }
 }
 

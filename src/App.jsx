@@ -55,6 +55,16 @@ function App() {
     return () => unsubscribe()
   }, [activeConversationId])
 
+  useEffect(() => {
+    if (activeConversationId) {
+      messageService.startPolling(activeConversationId, 2000)
+    }
+    
+    return () => {
+      messageService.stopPolling()
+    }
+  }, [activeConversationId])
+
   const handleSendMessage = useCallback((text) => {
     const newMessage = {
       id: `user_${Date.now()}`,
