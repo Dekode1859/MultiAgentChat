@@ -54,3 +54,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Next Steps
 - Docker build and verification
+
+## [Unreleased]
+### Added
+- Sparker service (Phase 1-4): node-pty + Socket.io for real OpenCode CLI streaming
+  - sparker/index.js: Express + Socket.io server on port 3002
+  - sparker/lib/ptyManager.js: spawns opencode CLI, handles stdin/stdout
+  - src/services/socketService.js: Socket.io client
+  - src/components/StreamingOutput.jsx: React component for streaming output

@@ -1,0 +1,15 @@
+{
+  "name": "sparker",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "socket.io": "^4.7.4",
+    "node-pty": "^1.0.0",
+    "strip-ansi": "^7.1.0",
+    "cors": "^2.8.5"
+  }
+}
