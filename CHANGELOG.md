@@ -21,6 +21,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Settings persistence (theme, sidebar, agent filter)
 - Import/export conversations as JSON
 - Clear all data option
+- messageService (src/services/messageService.js) for real-time messaging
+- Agent simulation with random response delays (1-3 seconds)
+- Typing indicators for agents
+- Message queue management with retry logic
+- Auto-scroll to new messages
+- Edit and delete messages (for user messages)
 
 ### Changed
 - Migrated from custom CSS to Tailwind CSS
@@ -29,10 +35,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated all components to use Tailwind classes
 - ThemeContext updated to support Tailwind dark mode
 - App.jsx now uses storage service for message and conversation management
+- Added message service integration for agent responses
 
 ### Known Issues
-- No real-time messaging (UI only)
 - No OpenCode integration yet
 
 ### Next Steps
-- Phase 3: Real Messaging System
+- Phase 4: OpenCode Integration
