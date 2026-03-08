@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import './InputArea.css'
+import { Input } from './ui/input'
+import { Button } from './ui/button'
+import { Send } from 'lucide-react'
 
 export function InputArea({ onSendMessage }) {
   const [text, setText] = useState('')
@@ -20,24 +22,17 @@ export function InputArea({ onSendMessage }) {
   }
   
   return (
-    <form className="input-area" onSubmit={handleSubmit}>
-      <textarea
-        className="input-area__field"
+    <form className="flex gap-2 p-4 border-t bg-card" onSubmit={handleSubmit}>
+      <Input
+        className="flex-1"
         placeholder="Type your message..."
         value={text}
         onChange={(e) => setText(e.target.value)}
         onKeyDown={handleKeyDown}
-        rows={1}
       />
-      <button 
-        type="submit" 
-        className="input-area__send"
-        disabled={!text.trim()}
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13"/>
-        </svg>
-      </button>
+      <Button type="submit" disabled={!text.trim()}>
+        <Send className="h-4 w-4" />
+      </Button>
     </form>
   )
 }

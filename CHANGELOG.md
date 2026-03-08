@@ -15,13 +15,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker configuration for deployment
 - README.md with project documentation
 - TODO.md with implementation roadmap
-- shadcn/ui skill for component library
+
+### Changed
+- Migrated from custom CSS to Tailwind CSS
+- Added shadcn/ui component library (Button, Input, Card, Avatar, DropdownMenu, ScrollArea, Tabs)
+- Created Sidebar component with agent list and conversation selector
+- Updated all components to use Tailwind classes
+- ThemeContext updated to support Tailwind dark mode
 
 ### Known Issues
 - Using placeholder/sample messages (not persistent)
-- No sidebar for multiple conversations
 - No real-time messaging (UI only)
 - No OpenCode integration yet
 
 ### Next Steps
-- Phase 1: UI Enhancement (Tailwind + shadcn/ui + Sidebar)
+- Phase 2: localStorage Backend

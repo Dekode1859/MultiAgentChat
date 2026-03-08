@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Header } from './components/Header'
 import { ChatArea } from './components/ChatArea'
 import { InputArea } from './components/InputArea'
+import { Sidebar } from './components/Sidebar'
 import { initialMessages } from './data/sampleMessages'
 import './App.css'
 
@@ -24,13 +25,19 @@ function App() {
     : messages.filter(m => m.agentId === activeFilter)
   
   return (
-    <div className="app">
-      <Header 
+    <div className="flex h-screen bg-background">
+      <Sidebar 
         activeFilter={activeFilter} 
         onFilterChange={setActiveFilter} 
       />
-      <ChatArea messages={filteredMessages} />
-      <InputArea onSendMessage={handleSendMessage} />
+      <div className="flex-1 flex flex-col">
+        <Header 
+          activeFilter={activeFilter} 
+          onFilterChange={setActiveFilter} 
+        />
+        <ChatArea messages={filteredMessages} />
+        <InputArea onSendMessage={handleSendMessage} />
+      </div>
     </div>
   )
 }
