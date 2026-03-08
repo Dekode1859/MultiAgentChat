@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Express API server (Phase 1) - server/index.js with /api/responses and /api/chats endpoints
 - Vite proxy configuration for API integration
 - opencodeService API integration (Phase 2) - postResponse() method with retry logic
+- OpenCode configuration documentation (Phase 3) - payload format and API endpoint
 
 ### Changed
 - Migrated from custom CSS to Tailwind CSS
@@ -47,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added message service integration for agent responses
 
 ### Known Issues
-- Phase 1, 2 complete (Express API + opencodeService integration)
+- Phase 1, 2, 3 complete (Express API + opencodeService + config docs)
 
 ### Next Steps
-- Phase 3: Document OpenCode config (in code)
+- Phase 4: UI Polling with messageService

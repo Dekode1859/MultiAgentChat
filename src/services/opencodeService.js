@@ -5,6 +5,28 @@ const OPENCODE_CONFIG = {
   maxRetries: 3
 }
 
+/**
+ * OpenCode Configuration for Response Streaming
+ * 
+ * To integrate OpenCode with this chat UI, configure OpenCode to POST
+ * response chunks to the following endpoint:
+ * 
+ *   POST http://localhost:3001/api/responses
+ * 
+ * Payload format:
+ * {
+ *   "chatId": "conv_123",           // Conversation ID
+ *   "agentId": "prometheus",        // Agent ID (prometheus, jarvis, dekode)
+ *   "chunk": "Response chunk text", // Response chunk (empty string for final)
+ *   "done": false,                   // Boolean - true for final chunk
+ *   "timestamp": "ISO-8601"        // Optional timestamp
+ * }
+ * 
+ * Environment variables:
+ *   VITE_OPENCODE_URL - Base URL for OpenCode API (default: http://localhost:3001)
+ *   VITE_OPENCODE_API_KEY - API key for authentication
+ */
+
 const CONNECTION_STATES = {
   DISCONNECTED: 'disconnected',
   CONNECTING: 'connecting',
