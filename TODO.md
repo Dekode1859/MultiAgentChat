@@ -158,3 +158,26 @@ Implementation is divided into four phases, progressing from UI enhancement to f
 - Phases can be worked on in parallel by splitting tasks among team members
 - Some tasks may be broken down further during implementation
 - API keys and credentials should be stored in environment variables, not in code
+
+---
+
+## Changelog Requirement (Mandatory)
+
+Every implementation session MUST:
+
+1. **Update CHANGELOG.md before committing** with:
+   - What was changed/implemented
+   - What's working now
+   - What's still broken/pending
+   - Any important notes
+
+2. **Reference CHANGELOG.md** when starting new sessions:
+   - Read it first to understand current state
+   - Build upon previous work, not redo
+
+3. **Commit format**: Clear messages about what changed
+
+Example CHANGELOG entry:
+
+
+This ensures continuity between sessions and provides history.
