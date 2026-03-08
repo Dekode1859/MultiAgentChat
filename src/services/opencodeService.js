@@ -92,6 +92,38 @@ class OpenCodeService {
     return headers
   }
 
+  async postResponse(chatId, agentId, chunk, done = false) {
+    const payload = {
+      chatId,
+      agentId,
+      chunk,
+      done,
+      timestamp: new Date().toISOString()
+    }
+
+    for (let attempt = 1; attempt <= OPENCODE_CONFIG.maxRetries; attempt++) {
+      try {
+        const response = await fetch(`${this.baseUrl}/api/responses`, {
+          method: 'POST',
+          headers: this.getHeaders(),
+          body: JSON.stringify(payload),
+          signal: AbortSignal.timeout(OPENCODE_CONFIG.timeout)
+        })
+
+        if (response.ok) {
+          const data = await response.json()
+          return data
+        }
+      } catch (error) {
+        if (attempt === OPENCODE_CONFIG.maxRetries) {
+          console.warn('Failed to POST response to API:', error.message)
+        }
+        await this.delay(500 * attempt)
+      }
+    }
+    return null
+  }
+
   async createSession(agentId = 'prometheus') {
     try {
       const response = await fetch(`${this.baseUrl}/sessions`, {
@@ -117,6 +149,7 @@ class OpenCodeService {
     const {
       agentId = 'prometheus',
       stream = true,
+      chatId = 'default',
       onChunk
     } = options
 
@@ -129,13 +162,13 @@ class OpenCodeService {
     this.emit('messageStart', { content, agentId })
 
     if (stream) {
-      return this.streamMessage(content, { agentId, onChunk })
+      return this.streamMessage(content, { agentId, chatId, onChunk })
     } else {
       return this.sendMessageDirect(content, { agentId })
     }
   }
 
-  async streamMessage(content, { agentId, onChunk }) {
+  async streamMessage(content, { agentId, chatId, onChunk }) {
     const mockResponses = {
       prometheus: this.generateMockResponse(content, 'prometheus'),
       jarvis: this.generateMockResponse(content, 'jarvis'),
@@ -150,16 +183,20 @@ class OpenCodeService {
       const chunk = chunks[i] + (i < chunks.length - 1 ? ' ' : '')
       fullResponse += chunk
       
+      const isLast = i === chunks.length - 1
+      
       if (onChunk) {
-        onChunk(chunk, { done: false, progress: (i + 1) / chunks.length })
+        onChunk(chunk, { done: isLast, progress: (i + 1) / chunks.length })
       }
 
       this.emit('streamChunk', { 
         chunk, 
         fullResponse, 
-        done: false, 
+        done: isLast, 
         progress: (i + 1) / chunks.length 
       })
+
+      await this.postResponse(chatId || 'default', agentId, chunk, isLast)
 
       await this.delay(50 + Math.random() * 100)
     }
