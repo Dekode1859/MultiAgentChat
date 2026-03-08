@@ -56,57 +56,52 @@
   --border-color: #30363d;
   --text-primary: #e6edf3;
   --text-secondary: #8b949e;
-  
   --jarvis-color: #58a6ff;
-  --jarvis-glow: rgba(88, 166, 255, 0.4);
+  --jarvis-glow: #58a6ff66;
   --dekode-color: #7ee787;
-  --dekode-glow: rgba(126, 231, 135, 0.4);
+  --dekode-glow: #7ee78766;
   --prometheus-color: #f778ba;
-  --prometheus-glow: rgba(247, 120, 186, 0.4);
-  
+  --prometheus-glow: #f778ba66;
   --user-color: #ffa657;
-  --user-glow: rgba(255, 166, 87, 0.4);
-  
-  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.5);
-  
-  --transition-fast: all 0.15s ease;
-  --transition-normal: all 0.2s ease;
-  
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --user-glow: #ffa65766;
+  --shadow-card: 0 4px 12px #0006;
+  --shadow-hover: 0 6px 16px #00000080;
+  --transition-fast: all .15s ease;
+  --transition-normal: all .2s ease;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --font-sans: "Inter", system-ui, sans-serif;
 }
 
-[data-theme="light"] {
-  --bg-primary: #ffffff;
+[data-theme=light] {
+  --bg-primary: #fff;
   --bg-secondary: #f6f8fa;
   --bg-tertiary: #eaeef2;
   --border-color: #d0d7de;
   --text-primary: #1f2328;
   --text-secondary: #656d76;
-  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.15);
+  --shadow-card: 0 4px 12px #0000001a;
+  --shadow-hover: 0 6px 16px #00000026;
 }
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-primary);
   color: var(--text-primary);
+  height: 100vh;
   line-height: 1.5;
   overflow: hidden;
-  height: 100vh;
 }
 
 #root {
+  flex-direction: column;
   height: 100vh;
   display: flex;
-  flex-direction: column;
 }
 
 ::-webkit-scrollbar {
@@ -127,21 +122,11 @@ body {
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
+  0%, to { opacity: 1; }
+  50% { opacity: .7; }
 }
